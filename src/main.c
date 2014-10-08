@@ -157,6 +157,14 @@ int main()
 	fio_init();
 	
 	register_romfs("romfs", &_sromfs);
+
+	/* Create output folder*/
+#if 1
+        int handle = host_action(SYS_SYSTEM, "mkdir output");
+        if(handle == -1) {
+        	fio_printf(1, "Open folder error!\n\r");
+        }
+#endif
 	
 	/* Create the queue used by the serial task.  Messages for write to
 	 * the RS232. */
@@ -170,7 +178,7 @@ int main()
 	            (signed portCHAR *) "CLI",
 	            512 /* stack size */, NULL, tskIDLE_PRIORITY + 2, NULL);
 
-#if 0
+#if 1
 	/* Create a task to record system log. */
 	xTaskCreate(system_logger,
 	            (signed portCHAR *) "Logger",
